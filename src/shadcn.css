@@ -4347,14 +4347,21 @@ html.dark .storefront-font .text-black {
 }
 
 
-/* V3.0.44 — mobile homepage alignment to the approved poster reference.
+/* V3.0.45 — mobile homepage alignment to the approved poster reference.
    The grouped SVG is enlarged as one locked composition, the vase is cropped
    by a flat green foreground edge, and the Shop action returns to a plain
    artwork-integrated text link. */
 @media (max-width: 639px) {
+  /* Keep the page canvas green so iOS Safari uses the foreground color for
+     the browser underlay beneath its bottom toolbar. The visible storefront
+     and poster remain cream above that underlay. */
+  html:has(.storefront-home),
   body:has(.storefront-home),
   body:has(.storefront-home) #app,
-  body:has(.storefront-home) .storefront-font,
+  body:has(.storefront-home) .storefront-font {
+    background-color: #057640;
+  }
+
   .storefront-home,
   .storefront-home__poster {
     background-color: #fff8f0;
@@ -4423,8 +4430,10 @@ html.dark .storefront-font .text-black {
   .storefront-home__hero-shop {
     position: absolute;
     z-index: 3;
-    top: 68%;
-    left: 71.4%;
+    top: auto;
+    right: 11.5%;
+    bottom: 29.2%;
+    left: auto;
     display: inline-flex;
     min-height: 0;
     align-items: center;
