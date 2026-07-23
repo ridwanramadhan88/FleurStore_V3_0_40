@@ -303,7 +303,7 @@ export const StorefrontCategoriesPage: FC<Props> = ({
       : 'Collection Series'
 
   return (
-    <div className="min-h-screen bg-[var(--sf-cream)] text-black">
+    <div className="storefront-categories-page min-h-screen bg-[var(--sf-cream)] text-black">
       <StorefrontHeader
         cartCount={cartCount}
         onOpenCart={onOpenCart}

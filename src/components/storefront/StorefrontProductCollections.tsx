@@ -32,7 +32,8 @@ export const StorefrontProductRail: FC<Props & { title: string }> = ({
   const scrollIdleTimerRef = useRef<number | null>(null)
   const userInterruptedRef = useRef(false)
   const productSignature = products.map((product) => product.id).join('|')
-  const shouldLoop = products.length > 2
+  const isPhoneLayout = window.matchMedia('(max-width: 639px)').matches
+  const shouldLoop = isPhoneLayout && products.length > 2
 
   const renderedProducts = useMemo(
     () =>
@@ -195,7 +196,7 @@ export const StorefrontProductRail: FC<Props & { title: string }> = ({
     <section aria-label={`${title} products`} className="space-y-3.5 lg:space-y-5">
       <h2 className={sectionTitleClass}>{title}</h2>
 
-      <div className="relative left-1/2 w-screen -translate-x-1/2">
+      <div className="featured-products-shell relative left-1/2 w-screen -translate-x-1/2">
         <div
           ref={railRef}
           onScroll={handleScroll}

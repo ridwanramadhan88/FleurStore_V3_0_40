@@ -1,4 +1,4 @@
-import type { FC } from 'react'
+import { useEffect, useRef, type FC } from 'react'
 import { ChevronRight } from 'lucide-react'
 import classicRoseCollectionCard from '../../assets/storefront-collections/classic-rose.svg'
 import medLilyCollectionCard from '../../assets/storefront-collections/med-lily-series.svg'
@@ -42,18 +42,31 @@ export const StorefrontNavigationDrawer: FC<Props> = ({
   onOpenCategories,
   onOpenAllFlowers,
   onOpenCollection,
-}) => (
-  <div
-    className={`storefront-navigation-layer ${open ? 'storefront-navigation-layer--open' : ''}`}
-    aria-hidden={!open}
-  >
-    <button
-      type="button"
-      className="storefront-navigation-backdrop"
-      onClick={onClose}
-      aria-label="Close navigation menu"
-      tabIndex={open ? 0 : -1}
-    />
+}) => {
+  const collectionRailRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+
+    const frame = window.requestAnimationFrame(() => {
+      collectionRailRef.current?.scrollTo({ left: 0, behavior: 'auto' })
+    })
+
+    return () => window.cancelAnimationFrame(frame)
+  }, [open])
+
+  return (
+    <div
+      className={`storefront-navigation-layer ${open ? 'storefront-navigation-layer--open' : ''}`}
+      aria-hidden={!open}
+    >
+      <button
+        type="button"
+        className="storefront-navigation-backdrop"
+        onClick={onClose}
+        aria-label="Close navigation menu"
+        tabIndex={open ? 0 : -1}
+      />
 
     <aside
       className="storefront-navigation-drawer"
@@ -96,7 +109,10 @@ export const StorefrontNavigationDrawer: FC<Props> = ({
             <span aria-hidden="true">Swipe</span>
           </div>
 
-          <div className="storefront-navigation-collections__rail no-scrollbar">
+          <div
+            ref={collectionRailRef}
+            className="storefront-navigation-collections__rail no-scrollbar"
+          >
             {collectionCards.map((collection) => (
               <button
                 key={collection.name}
@@ -114,6 +130,7 @@ export const StorefrontNavigationDrawer: FC<Props> = ({
           </div>
         </section>
       </div>
-    </aside>
-  </div>
-)
+      </aside>
+    </div>
+  )
+}

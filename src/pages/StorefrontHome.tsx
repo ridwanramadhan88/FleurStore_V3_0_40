@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 import heroFlowerArtwork from '../assets/storefront-home/main-artwork-group.svg'
+import desktopHeroArtwork from '../assets/storefront-home/desktop-main-artwork.svg'
 import { StorefrontHeader } from '../components/storefront/StorefrontHeader'
 
 interface Props {
@@ -37,6 +38,16 @@ export const StorefrontHome: FC<Props> = ({
         className="storefront-home__flower"
         src={heroFlowerArtwork}
         alt=""
+        aria-hidden="true"
+      />
+      <img
+        className="storefront-home__desktop-flower"
+        src={desktopHeroArtwork}
+        alt=""
+        aria-hidden="true"
+      />
+      <div
+        className="storefront-home__desktop-ground"
         aria-hidden="true"
       />
 

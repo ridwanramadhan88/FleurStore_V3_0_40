@@ -124,6 +124,8 @@ export const StorefrontProductDetailPage: FC<Props> = ({
     revealThresholdVh: 0.5,
     revealKey: cartCount,
   });
+  const desktopCartBarPersistent = window.matchMedia("(min-width: 1024px)").matches;
+  const productDetailsAlwaysOpen = window.matchMedia("(min-width: 640px)").matches;
 
   useEffect(() => {
     setActiveImage(images[0] ?? null);
@@ -163,8 +165,8 @@ export const StorefrontProductDetailPage: FC<Props> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[var(--sf-cream)] text-black">
-      <div className="hidden lg:block">
+    <div className="storefront-product-detail-page min-h-screen bg-[var(--sf-cream)] text-black">
+      <div className="hidden md:block">
         <StorefrontHeader
           cartCount={cartCount}
           onOpenCart={onOpenCart}
@@ -177,10 +179,10 @@ export const StorefrontProductDetailPage: FC<Props> = ({
         />
       </div>
       <main>
-        <div className="lg:mx-auto lg:grid lg:max-w-[1320px] lg:grid-cols-[minmax(0,620px)_minmax(380px,1fr)] lg:items-start lg:gap-16 lg:px-12 lg:pt-10 xl:gap-20 xl:px-14">
+        <div className="storefront-product-detail-layout lg:mx-auto lg:grid lg:max-w-[1320px] lg:grid-cols-[minmax(0,620px)_minmax(380px,1fr)] lg:items-start lg:gap-16 lg:px-12 lg:pt-10 xl:gap-20 xl:px-14">
           <section
             aria-label={`${product.name} images`}
-            className="relative min-w-0 overflow-hidden bg-[#606060] [clip-path:polygon(0_0,100%_0,100%_98.65%,76.6%_100%,35%_96.9%,0_98.7%)] lg:aspect-[4/5] lg:w-full"
+            className="storefront-product-detail-gallery relative min-w-0 overflow-hidden bg-[#606060] [clip-path:polygon(0_0,100%_0,100%_98.65%,76.6%_100%,35%_96.9%,0_98.7%)] lg:aspect-[4/5] lg:w-full"
           >
             <div className="relative aspect-[4/5] w-full touch-pan-y lg:absolute lg:inset-0 lg:aspect-auto" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
               {activeImage ? (
@@ -194,7 +196,7 @@ export const StorefrontProductDetailPage: FC<Props> = ({
                 <div className="absolute inset-0 bg-[#606060]" aria-label="Product image unavailable" />
               )}
 
-              <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))] sm:px-7 sm:pt-7 lg:hidden">
+              <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))] sm:px-7 sm:pt-7 md:hidden">
                 <button
                   type="button"
                   onClick={onBack}
@@ -263,9 +265,9 @@ export const StorefrontProductDetailPage: FC<Props> = ({
           </section>
 
           <StorefrontContainer className="lg:contents">
-            <section className="space-y-6 px-0 pb-7 pt-8 sm:pt-10 lg:max-w-[31rem] lg:space-y-5 lg:px-0 lg:pb-0 lg:pt-1">
+            <section className="storefront-product-detail-info space-y-6 px-0 pb-7 pt-8 sm:pt-10 lg:max-w-[31rem] lg:space-y-5 lg:px-0 lg:pb-0 lg:pt-1">
               <div className="space-y-4 lg:space-y-3">
-                <div className="flex flex-wrap items-center gap-2 lg:hidden">
+                <div className="storefront-product-detail-tags flex flex-wrap items-center gap-2">
                   <span
                     className={`inline-flex items-center rounded-full font-medium leading-none ${
                       product.material === "fresh"
@@ -282,7 +284,7 @@ export const StorefrontProductDetailPage: FC<Props> = ({
                   )}
                 </div>
 
-                <div className="hidden items-center gap-3 lg:flex">
+                <div className="hidden">
                   <span className={`sf-label ${
                     product.material === "fresh" ? "text-[#00813f]" : "text-[#5c55c8]"
                   }`}>
@@ -312,7 +314,7 @@ export const StorefrontProductDetailPage: FC<Props> = ({
                 </div>
               </div>
 
-              <div className="storefront-long-dash lg:hidden" aria-hidden="true" />
+              <div className="storefront-long-dash" aria-hidden="true" />
 
               {product.description && product.description.trim().length > 0 && (
                 <section aria-labelledby="product-description-heading">
@@ -402,7 +404,10 @@ export const StorefrontProductDetailPage: FC<Props> = ({
                 </button>
               </section>
 
-              <details className="group storefront-product-details lg:mt-2">
+              <details
+                open={productDetailsAlwaysOpen}
+                className="group storefront-product-details lg:mt-2"
+              >
                 <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 sf-type-2 font-medium lg:min-h-12">
                   Product details
                   <span className="sf-type-3 font-normal leading-none text-black/42 transition group-open:rotate-45">+</span>
@@ -451,7 +456,7 @@ export const StorefrontProductDetailPage: FC<Props> = ({
           totalIdr={cartTotalIdr}
           formatter={formatter}
           onOpen={onOpenCart}
-          concealed={!mobileCartBarVisible}
+          concealed={!desktopCartBarPersistent && !mobileCartBarVisible}
           suppressUnderlay={menuOpen}
         />
       )}

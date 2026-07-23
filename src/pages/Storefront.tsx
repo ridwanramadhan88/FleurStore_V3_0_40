@@ -537,7 +537,7 @@ export const StorefrontPage: FC = () => {
           </div>
         )
       ) : (
-        <div className="min-h-screen bg-[var(--sf-cream)] text-black">
+        <div className="storefront-shop-page min-h-screen bg-[var(--sf-cream)] text-black">
           <StorefrontHeader
             cartCount={cartCount}
             onOpenCart={handleOpenCart}
