@@ -30,8 +30,8 @@ export const SummaryStep: FC<CartDrawerViewModel> = ({
         <h3 className="mt-2 text-[2.35rem] font-medium leading-[0.92]">
           Thank you!
         </h3>
-        <p className="mx-auto mt-3 max-w-sm text-[1rem] leading-6 text-black/54">
-          Your order has been sent to the Fleurstales team and is waiting for staff verification.
+        <p className="mx-auto mt-3 max-w-sm text-[1.05rem] leading-6 text-black/58">
+          We received your order. The team will confirm it after payment.
         </p>
       </div>
 
@@ -68,9 +68,9 @@ export const SummaryStep: FC<CartDrawerViewModel> = ({
             <h4 className="sf-type-4 font-medium leading-[0.98]">
               {paymentMethod === 'transfer' ? 'Bank transfer' : 'Cash on pickup'}
             </h4>
-            <p className="mt-1.5 sf-type-2 leading-6 text-black/52">
+            <p className="mt-1.5 sf-type-2 leading-6 text-black/56">
               {paymentMethod === 'transfer'
-                ? 'Use one of the accounts below and follow the store payment instructions.'
+                ? 'Transfer to the account below.'
                 : `Please prepare ${formatter.format(grandTotalIdr)} in cash.`}
             </p>
           </div>
@@ -96,9 +96,12 @@ export const SummaryStep: FC<CartDrawerViewModel> = ({
         )}
 
         {paymentInstructions.trim() && (
-          <p className="mt-3 rounded-[var(--sf-radius-field)] bg-[#f0e6dd] px-4 py-3.5 sf-type-2 leading-6 text-black/60">
-            {paymentInstructions}
-          </p>
+          <details className="mt-3 rounded-[var(--sf-radius-field)] bg-[#f0e6dd] px-4 py-3.5">
+            <summary className="cursor-pointer sf-type-2 font-medium text-black/72">
+              Payment note
+            </summary>
+            <p className="mt-2 sf-type-2 leading-6 text-black/60">{paymentInstructions}</p>
+          </details>
         )}
       </section>
 

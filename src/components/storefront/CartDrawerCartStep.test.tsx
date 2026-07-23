@@ -35,7 +35,7 @@ describe('CartStep', () => {
 
     await user.click(screen.getByRole('button', { name: 'Add one more Classic Bouquet' }))
     await user.click(screen.getByRole('button', { name: 'Remove one Classic Bouquet' }))
-    await user.click(screen.getByRole('button', { name: /Continue to checkout/i }))
+    await user.click(screen.getByRole('button', { name: /^Checkout$/i }))
 
     expect(viewModel.onIncrement).toHaveBeenCalledWith('line-1')
     expect(viewModel.onDecrement).toHaveBeenCalledWith('line-1')
@@ -49,7 +49,7 @@ describe('CartStep', () => {
       />,
     )
 
-    expect(screen.getByRole('button', { name: /Continue to checkout/i })).toBeDisabled()
+    expect(screen.getByRole('button', { name: /^Checkout$/i })).toBeDisabled()
     expect(screen.getByText(/Your cart is empty/i)).toBeInTheDocument()
   })
 })

@@ -21,9 +21,7 @@ export const CartStep: FC<CartDrawerViewModel> = ({
               <CartBagIcon className="h-auto w-7 opacity-55" />
             </span>
             <h3 className="mt-5 sf-type-4 font-medium">Your cart is empty</h3>
-            <p className="mt-2 sf-support text-black/52">
-              Add something beautiful from the shop.
-            </p>
+            <p className="mt-2 sf-support text-black/52">Choose something beautiful.</p>
           </div>
         </div>
       ) : (
@@ -48,7 +46,7 @@ export const CartStep: FC<CartDrawerViewModel> = ({
                     <h3 className="line-clamp-2 text-[1.125rem] font-medium leading-[1.08] sm:text-[1.2rem]">
                       {line.name}
                     </h3>
-                    <p className="mt-1.5 sf-type-1 leading-5 text-black/48">
+                    <p className="mt-1.5 sf-type-2 leading-5 text-black/52">
                       {formatter.format(line.unitPriceIdr)} each
                     </p>
                   </div>
@@ -96,7 +94,7 @@ export const CartStep: FC<CartDrawerViewModel> = ({
         onClick={() => setStep('details')}
         className="sf-primary-action tap-scale flex w-full items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00813f]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f0e6dd]"
       >
-        Continue to checkout
+        Checkout
       </button>
     </footer>
   </>

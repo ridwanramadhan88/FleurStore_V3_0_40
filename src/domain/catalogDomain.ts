@@ -121,6 +121,9 @@ export const getAvailableCategories = (
   products: CatalogProduct[],
   allCategoryNamesInOrder: string[],
 ): CatalogCategory[] => {
+  // The category list is configuration-driven; keep the product argument in
+  // the public selector signature for callers that already provide it.
+  void products
   // Keep every configured occasion routable, including intentionally empty
   // categories such as Anniversary. The product grid will simply show its
   // empty state until Business OS assigns products to that occasion.

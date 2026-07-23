@@ -53,9 +53,9 @@ interface ArtworkCardItem extends ArtworkCardDefinition {
   onClick: () => void
 }
 
-const tabs: Array<{ id: CategoryTab; label: string }> = [
+const tabs: Array<{ id: CategoryTab; label: string; mobileLabel?: string }> = [
   { id: 'occasion', label: 'Occasion' },
-  { id: 'arrangement', label: 'Arrangement Type' },
+  { id: 'arrangement', label: 'Arrangement Type', mobileLabel: 'Arrangement.' },
   { id: 'collection', label: 'Collection Series' },
 ]
 
@@ -344,7 +344,8 @@ export const StorefrontCategoriesPage: FC<Props> = ({
                         : 'bg-[#f0e6dd] text-black/72 hover:bg-[#e9ded3]'
                     }`}
                   >
-                    {tab.label}
+                    <span className="sm:hidden">{tab.mobileLabel ?? tab.label}</span>
+                    <span className="hidden sm:inline">{tab.label}</span>
                   </button>
                 )
               })}

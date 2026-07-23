@@ -13,8 +13,8 @@ const CheckoutSection: FC<{ title: string; children: ReactNode }> = ({
   children,
 }) => (
   <section>
-    <h3 className="sf-type-4 font-medium leading-[0.96] text-black">{title}</h3>
-    <div className="mt-5 space-y-4">{children}</div>
+    <h3 className="checkout-section-title font-medium leading-[0.96] text-black">{title}</h3>
+    <div className="mt-4 space-y-4">{children}</div>
   </section>
 )
 
@@ -69,7 +69,7 @@ export const DetailsStep: FC<CartDrawerViewModel> = ({
   handleContinueFromDetails,
 }) => (
   <>
-    <div className="storefront-checkout-form storefront-checkout-scroll flex-1 space-y-12 overflow-y-auto px-[18px] pb-10 pt-5 sm:space-y-14 sm:px-7 sm:pt-6 lg:px-8">
+    <div className="storefront-checkout-form storefront-checkout-scroll flex-1 space-y-10 overflow-y-auto px-[18px] pb-10 pt-5 sm:px-7 sm:pt-6 lg:px-8">
       <CheckoutSection title="Contact">
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Name" required>
@@ -213,36 +213,33 @@ export const DetailsStep: FC<CartDrawerViewModel> = ({
         </div>
       </CheckoutSection>
 
-      <CheckoutSection title="Greeting card">
-        <Field label="Greeting message">
+      <CheckoutSection title="Extras (optional)">
+        <Field label="Card message">
           <textarea
             id="checkoutGreetingMessage"
             value={greetingMessage}
             onChange={(event) => setGreetingMessage(event.target.value)}
-            placeholder="Write the message on the card."
+            placeholder="A short message for the card"
             className={textareaClass}
             aria-label="Greeting message"
           />
         </Field>
-        <Field label="Name on greeting card">
+        <Field label="From">
           <input
             id="checkoutGreetingCardName"
             value={greetingCardName}
             onChange={(event) => setGreetingCardName(event.target.value)}
-            placeholder="e.g. From Budi"
+            placeholder="Name on the card"
             className={fieldClass}
             aria-label="Name on greeting card"
           />
         </Field>
-      </CheckoutSection>
-
-      <CheckoutSection title="Order note">
-        <Field label="Special request or note">
+        <Field label="Order note">
           <textarea
             id="checkoutOrderNote"
             value={orderNote}
             onChange={(event) => setOrderNote(event.target.value)}
-            placeholder="Recipient instructions, flower requests, or other notes for the team."
+            placeholder="Delivery notes or flower requests"
             className={textareaClass}
           />
         </Field>

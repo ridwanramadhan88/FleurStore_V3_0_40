@@ -15,9 +15,11 @@ const ReviewSection: FC<{ eyebrow: string; title?: string; children: ReactNode }
   children,
 }) => (
   <section>
-    <p className="sf-label text-[#00813f]">{eyebrow}</p>
-    {title && <h3 className="mt-1.5 sf-type-4 font-medium leading-[0.96]">{title}</h3>}
-    <div className="mt-4">{children}</div>
+    <h3 className="checkout-section-title flex flex-wrap items-baseline gap-x-2 font-medium leading-[1.05]">
+      <span className="text-[#00813f]">{eyebrow}</span>
+      {title && <><span className="text-black/28">·</span><span>{title}</span></>}
+    </h3>
+    <div className="mt-3.5">{children}</div>
   </section>
 )
 
@@ -57,7 +59,7 @@ export const ReviewStep: FC<CartDrawerViewModel> = ({
   setStep,
 }) => (
   <>
-    <div className="storefront-checkout-scroll flex-1 space-y-11 overflow-y-auto px-[18px] pb-8 pt-5 sm:space-y-12 sm:px-7 sm:pt-6 lg:px-8">
+    <div className="storefront-checkout-scroll flex-1 space-y-9 overflow-y-auto px-[18px] pb-8 pt-5 sm:px-7 sm:pt-6 lg:px-8">
       <ReviewSection eyebrow="Customer" title={customerName}>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[1rem] leading-7 text-black/68">
           <span>{whatsappNumber}</span>
@@ -92,7 +94,7 @@ export const ReviewStep: FC<CartDrawerViewModel> = ({
         </div>
       </ReviewSection>
 
-      <ReviewSection eyebrow="Items" title={`${lines.length} product${lines.length === 1 ? '' : 's'}`}>
+      <ReviewSection eyebrow="Items" title={`${lines.length}`}>
         <div className="divide-y divide-black/[0.09]">
           {lines.map((line) => (
             <div key={line.lineId} className="grid grid-cols-[64px_minmax(0,1fr)_auto] items-center gap-3.5 py-4">
@@ -110,7 +112,7 @@ export const ReviewStep: FC<CartDrawerViewModel> = ({
       </ReviewSection>
 
       {(greetingMessage.trim() || greetingCardName.trim() || orderNote.trim()) && (
-        <ReviewSection eyebrow="Personalisation" title="Card and notes">
+        <ReviewSection eyebrow="Extras" title="Card and notes">
           <div className="space-y-6">
             {(greetingMessage.trim() || greetingCardName.trim()) && (
               <div className="border-l-[3px] border-[#00813f] py-0.5 pl-4">
@@ -135,7 +137,7 @@ export const ReviewStep: FC<CartDrawerViewModel> = ({
         </ReviewSection>
       )}
 
-      <ReviewSection eyebrow="Voucher" title="Discount code">
+      <ReviewSection eyebrow="Voucher">
         {!appliedVoucherCode && eligibleVouchers.length > 0 && (
           <div className="mb-3 flex flex-wrap gap-2" aria-label="Available vouchers">
             {eligibleVouchers.map((voucher) => (
@@ -193,12 +195,12 @@ export const ReviewStep: FC<CartDrawerViewModel> = ({
         {voucherMessage && !appliedVoucherCode && <p className="mt-2 sf-type-1 text-red-700">{voucherMessage}</p>}
       </ReviewSection>
 
-      <ReviewSection eyebrow="Payment" title="Choose payment method">
+      <ReviewSection eyebrow="Payment">
         <div className="grid gap-2.5">
           {([
-            { id: 'transfer' as const, label: 'Bank transfer', description: 'Pay using a listed bank account', Icon: Building2 },
-            { id: 'cash' as const, label: 'Cash on pickup', description: 'Available for pickup orders only', Icon: Banknote },
-          ]).map(({ id, label, description, Icon }) => {
+            { id: 'transfer' as const, label: 'Bank transfer', Icon: Building2 },
+            { id: 'cash' as const, label: 'Cash at pickup', Icon: Banknote },
+          ]).map(({ id, label, Icon }) => {
             const isDisabled = id === 'cash' && !isCashAllowedForFulfillment(fulfillment)
             const selected = paymentMethod === id
             return (
@@ -217,19 +219,12 @@ export const ReviewStep: FC<CartDrawerViewModel> = ({
                 <span className={`grid size-10 shrink-0 place-items-center rounded-full ${selected ? 'bg-[#00813f] text-white' : 'bg-[#f0e6dd] text-black/55'}`}>
                   <Icon className="size-[1.05rem]" strokeWidth={1.8} />
                 </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block sf-type-2 font-medium text-black">{label}</span>
-                  <span className="mt-0.5 block sf-type-1 text-black/44">{description}</span>
-                </span>
+                <span className="min-w-0 flex-1 sf-type-3 font-medium text-black">{label}</span>
                 <span className={`size-4 shrink-0 rounded-full border ${selected ? 'border-[5px] border-[#00813f]' : 'border-black/22'}`} aria-hidden="true" />
               </button>
             )
           })}
         </div>
-
-        {!isCashAllowedForFulfillment(fulfillment) && (
-          <p className="mt-2 sf-type-1 leading-5 text-black/44">Delivery orders are bank transfer only.</p>
-        )}
 
         {paymentMethod === 'transfer' && (
           <div className="mt-3 overflow-hidden rounded-[var(--sf-radius-field)] bg-[#f0e6dd]">
