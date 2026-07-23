@@ -137,9 +137,13 @@ const countProducts = (products: CatalogProduct[], predicate: (product: CatalogP
 
 const usesCompactCategoryTitle = (value: string) => value.length >= 14
 
+const usesArrangementWrappedTitle = (value: string) =>
+  value === 'Box, Basket & Vase' || value === 'Standing Flower'
+
 const ArtworkCategoryCard: FC<{ item: ArtworkCardItem }> = ({ item }) => {
   const title = item.displayName ?? item.name
   const compactTitle = usesCompactCategoryTitle(title)
+  const wrappedArrangementTitle = usesArrangementWrappedTitle(title)
 
   return (
   <button
@@ -162,9 +166,11 @@ const ArtworkCategoryCard: FC<{ item: ArtworkCardItem }> = ({ item }) => {
     >
       <span
         className={`category-art-card__title block whitespace-nowrap font-host font-semibold leading-[0.98] [font-kerning:normal] ${
-          compactTitle
-            ? 'text-[clamp(1.575rem,6.48vw,3.158rem)] sm:text-[clamp(1.662rem,3.32vw,3.071rem)]'
-            : 'text-[clamp(1.766rem,7.266vw,3.54rem)] sm:text-[clamp(1.863rem,3.726vw,3.443rem)]'
+          wrappedArrangementTitle
+            ? 'max-w-[10.5ch] whitespace-normal text-[clamp(1.45rem,5.8vw,2.95rem)] sm:text-[clamp(1.55rem,3.15vw,2.85rem)]'
+            : compactTitle
+              ? 'text-[clamp(1.575rem,6.48vw,3.158rem)] sm:text-[clamp(1.662rem,3.32vw,3.071rem)]'
+              : 'text-[clamp(1.766rem,7.266vw,3.54rem)] sm:text-[clamp(1.863rem,3.726vw,3.443rem)]'
         }`}
         style={{ color: item.textColor }}
       >
@@ -345,13 +351,7 @@ export const StorefrontCategoriesPage: FC<Props> = ({
 
           <div className="mt-7 sm:mt-9">
             <div className="flex items-end justify-between gap-4">
-              <h2
-                className={`category-section-title min-w-0 whitespace-nowrap font-host font-semibold leading-[0.98] text-black ${
-                  activeTab === 'occasion'
-                    ? 'text-[clamp(1.85rem,7.1vw,3.45rem)]'
-                    : 'text-[clamp(1.34rem,5.15vw,2.9rem)] sm:text-[clamp(1.65rem,3.45vw,2.9rem)]'
-                }`}
-              >
+              <h2 className="category-section-title min-w-0 text-balance font-host text-[clamp(1.85rem,7.1vw,3.45rem)] font-semibold leading-[0.98] text-black">
                 {activeLabel}
               </h2>
               <span className="shrink-0 pb-0.5 font-host text-[0.76rem] font-semibold tabular-nums text-black/42 sm:text-[0.82rem]">
