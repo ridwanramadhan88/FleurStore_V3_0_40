@@ -327,8 +327,8 @@ export const StorefrontCategoriesPage: FC<Props> = ({
             </div>
           </header>
 
-          <div className="category-tabs-shell -mx-[18px] border-b border-black/10 bg-[var(--sf-cream)] px-[18px] py-3 sm:-mx-7 sm:px-7 lg:mx-0 lg:px-0 lg:pt-5" role="tablist" aria-label="Category groups">
-            <div className="grid grid-cols-3 gap-1.5">
+          <div className="category-tabs-shell -mx-[18px] border-b border-black/10 bg-[var(--sf-cream)] px-[18px] py-4 sm:-mx-7 sm:px-7 sm:py-5 lg:mx-0 lg:px-0 lg:pt-5" role="tablist" aria-label="Category groups">
+            <div className="grid grid-cols-3 gap-2">
               {tabs.map((tab) => {
                 const selected = activeTab === tab.id
                 return (
@@ -338,7 +338,7 @@ export const StorefrontCategoriesPage: FC<Props> = ({
                     role="tab"
                     aria-selected={selected}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`category-tab min-h-[3.25rem] min-w-0 whitespace-nowrap px-2.5 font-host text-[0.88rem] font-semibold leading-none transition-colors sm:min-h-14 sm:px-5 sm:text-[1.02rem] ${
+                    className={`category-tab min-h-[3.75rem] min-w-0 whitespace-nowrap px-3 font-host text-[0.94rem] font-semibold leading-none transition-colors sm:min-h-16 sm:px-5 sm:text-[1.08rem] ${
                       selected
                         ? 'category-tab--active bg-black text-[#fdf6ee]'
                         : 'bg-[#f0e6dd] text-black/72 hover:bg-[#e9ded3]'
@@ -351,25 +351,25 @@ export const StorefrontCategoriesPage: FC<Props> = ({
             </div>
           </div>
 
-          <div className="mt-7 sm:mt-9">
+          <div className="mt-9 sm:mt-11">
             <div className="flex items-end justify-between gap-4">
               <div className="min-w-0">
-                <p className="font-host text-[0.78rem] font-semibold leading-none text-black/48 sm:text-[0.86rem]">
+                <p className="font-host text-base font-semibold leading-none text-black/58 sm:text-[1.05rem]">
                   Shop by
                 </p>
-                <h2 className="category-section-title mt-1 min-w-0 text-balance font-host text-[clamp(2.05rem,8vw,3.65rem)] font-semibold leading-[0.9] text-black">
+                <h2 className="category-section-title mt-2 min-w-0 text-balance font-host text-[clamp(2.05rem,8vw,3.65rem)] font-semibold leading-[0.9] text-black">
                   {activeCategoryLabel}
                 </h2>
               </div>
-              <span className="shrink-0 pb-0.5 font-host text-[0.76rem] font-semibold tabular-nums text-black/42 sm:text-[0.82rem]">
+              <span className="shrink-0 pb-0.5 font-host text-[0.82rem] font-semibold tabular-nums text-black/48 sm:text-[0.9rem]">
                 {activeItems.length} {activeItems.length === 1 ? 'category' : 'categories'}
               </span>
             </div>
-            <div className="mt-4 border-b border-dashed border-black/20" aria-hidden="true" />
+            <div className="mt-5 border-b border-dashed border-black/20" aria-hidden="true" />
           </div>
 
           {activeItems.length > 0 ? (
-            <section className="mt-4 grid grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4" role="tabpanel">
+            <section className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5" role="tabpanel">
               {activeItems.map((item) => <ArtworkCategoryCard key={item.name} item={item} />)}
             </section>
           ) : (

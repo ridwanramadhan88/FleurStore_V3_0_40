@@ -81,7 +81,7 @@ export const DatePickerField: React.FC<DatePickerFieldProps> = ({
         </button>
       </PopoverTrigger>
       <PopoverContent
-        className="storefront-date-popover z-[140] w-[min(20rem,calc(100vw-2rem))] rounded-2xl p-1.5 shadow-xl"
+        className="storefront-date-popover z-[140] w-[min(22rem,calc(100vw-1rem))] rounded-2xl p-2 shadow-xl"
         align="start"
         onCloseAutoFocus={(event) => {
           event.preventDefault()
@@ -224,7 +224,7 @@ export interface TimeSelectFieldProps {
 }
 
 /** Row height (px) for each slot in the scroll wheel. Keep in sync with the inline style below. */
-const WHEEL_ROW_HEIGHT = 40
+const WHEEL_ROW_HEIGHT = 48
 const WHEEL_VISIBLE_ROWS = 5
 const WHEEL_PADDING_ROWS = Math.floor(WHEEL_VISIBLE_ROWS / 2)
 
@@ -267,7 +267,6 @@ const TimeScrollWheel: React.FC<{
         container.scrollTop = targetTop
       }
       if (nextValue !== highlighted) onHighlight(nextValue)
-      onCommit(nextValue)
     }, 120)
   }
 
@@ -302,7 +301,7 @@ const TimeScrollWheel: React.FC<{
               }}
               className={cn(
                 'flex w-full items-center justify-center text-center font-medium tabular-nums transition',
-                isHighlighted ? 'text-lg text-foreground' : 'text-sm text-muted-foreground hover:text-muted-foreground',
+                isHighlighted ? 'text-xl text-foreground' : 'text-base text-muted-foreground hover:text-foreground',
               )}
               style={{ height: WHEEL_ROW_HEIGHT, scrollSnapAlign: 'center' }}
             >
@@ -336,6 +335,9 @@ export const TimeSelectField: React.FC<TimeSelectFieldProps> = ({
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (nextOpen) setDraftValue(selected)
+    if (!nextOpen && open && draftValue && draftValue !== value) {
+      onChange(draftValue)
+    }
     setOpen(nextOpen)
   }
 
@@ -364,7 +366,7 @@ export const TimeSelectField: React.FC<TimeSelectFieldProps> = ({
         </button>
       </PopoverTrigger>
       <PopoverContent
-        className="storefront-time-popover z-[140] w-[min(15rem,calc(100vw-2rem))] rounded-2xl p-2 shadow-xl"
+        className="storefront-time-popover z-[140] w-[min(18rem,calc(100vw-1rem))] rounded-2xl p-2.5 shadow-xl"
         align="end"
         onCloseAutoFocus={(event) => {
           event.preventDefault()

@@ -5,7 +5,7 @@ import { TimeSelectField } from './date-time-field'
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 describe('TimeSelectField', () => {
-  it('commits the nearest time when the wheel settles', async () => {
+  it('keeps the picker open while scrolling and commits when it closes', async () => {
     const onChange = vi.fn()
     render(<TimeSelectField value="10:45" onChange={onChange} allowedSlots={['10:15', '10:30', '10:45', '11:00', '11:15']} />)
 
@@ -15,6 +15,8 @@ describe('TimeSelectField', () => {
     fireEvent.scroll(listbox)
     await wait(250)
 
+    expect(onChange).not.toHaveBeenCalled()
+    fireEvent.keyDown(document, { key: 'Escape' })
     expect(onChange).toHaveBeenCalledWith('11:00')
   })
 
