@@ -40,6 +40,7 @@ interface Props {
 interface ArtworkCardDefinition {
   name: string
   displayName?: string
+  titleLines?: readonly [string, string]
   subtitle?: string
   image: string
   textColor: string
@@ -78,6 +79,7 @@ const arrangementCards: ArtworkCardDefinition[] = [
   },
   {
     name: 'Box, Basket & Vase',
+    titleLines: ['Box, Basket', '& Vase'],
     image: boxBasketVaseArrangementCard,
     textColor: '#fbf9ef',
     arrowBackground: '#f5eee6',
@@ -85,6 +87,7 @@ const arrangementCards: ArtworkCardDefinition[] = [
   },
   {
     name: 'Standing Flower',
+    titleLines: ['Standing', 'Flower'],
     image: standingFlowerArrangementCard,
     textColor: '#0a6240',
     arrowBackground: '#0a6240',
@@ -137,13 +140,10 @@ const countProducts = (products: CatalogProduct[], predicate: (product: CatalogP
 
 const usesCompactCategoryTitle = (value: string) => value.length >= 14
 
-const usesArrangementWrappedTitle = (value: string) =>
-  value === 'Box, Basket & Vase' || value === 'Standing Flower'
-
 const ArtworkCategoryCard: FC<{ item: ArtworkCardItem }> = ({ item }) => {
   const title = item.displayName ?? item.name
   const compactTitle = usesCompactCategoryTitle(title)
-  const wrappedArrangementTitle = usesArrangementWrappedTitle(title)
+  const hasFixedTitleLines = Boolean(item.titleLines)
 
   return (
   <button
@@ -165,16 +165,18 @@ const ArtworkCategoryCard: FC<{ item: ArtworkCardItem }> = ({ item }) => {
       aria-hidden="true"
     >
       <span
-        className={`category-art-card__title block whitespace-nowrap font-host font-semibold leading-[0.98] [font-kerning:normal] ${
-          wrappedArrangementTitle
-            ? 'max-w-[10.5ch] whitespace-normal text-[clamp(1.45rem,5.8vw,2.95rem)] sm:text-[clamp(1.55rem,3.15vw,2.85rem)]'
+        className={`category-art-card__title block whitespace-nowrap font-host font-semibold [font-kerning:normal] ${
+          hasFixedTitleLines
+            ? 'text-[clamp(1.575rem,6.48vw,3.158rem)] leading-[0.92] sm:text-[clamp(1.662rem,3.32vw,3.071rem)]'
             : compactTitle
-              ? 'text-[clamp(1.575rem,6.48vw,3.158rem)] sm:text-[clamp(1.662rem,3.32vw,3.071rem)]'
-              : 'text-[clamp(1.766rem,7.266vw,3.54rem)] sm:text-[clamp(1.863rem,3.726vw,3.443rem)]'
+              ? 'text-[clamp(1.575rem,6.48vw,3.158rem)] leading-[0.98] sm:text-[clamp(1.662rem,3.32vw,3.071rem)]'
+              : 'text-[clamp(1.766rem,7.266vw,3.54rem)] leading-[0.98] sm:text-[clamp(1.863rem,3.726vw,3.443rem)]'
         }`}
         style={{ color: item.textColor }}
       >
-        {title}
+        {item.titleLines
+          ? item.titleLines.map((line) => <span key={line} className="block">{line}</span>)
+          : title}
       </span>
       {item.subtitle && (
         <span
@@ -294,11 +296,11 @@ export const StorefrontCategoriesPage: FC<Props> = ({
       ? arrangementItems
       : collectionItems
 
-  const activeLabel = activeTab === 'occasion'
-    ? 'Shop by Occasion'
+  const activeCategoryLabel = activeTab === 'occasion'
+    ? 'Occasion'
     : activeTab === 'arrangement'
-      ? 'Shop by Arrangement Type'
-      : 'Shop by Collection Series'
+      ? 'Arrangement Type'
+      : 'Collection Series'
 
   return (
     <div className="min-h-screen bg-[var(--sf-cream)] text-black">
@@ -351,9 +353,14 @@ export const StorefrontCategoriesPage: FC<Props> = ({
 
           <div className="mt-7 sm:mt-9">
             <div className="flex items-end justify-between gap-4">
-              <h2 className="category-section-title min-w-0 text-balance font-host text-[clamp(1.85rem,7.1vw,3.45rem)] font-semibold leading-[0.98] text-black">
-                {activeLabel}
-              </h2>
+              <div className="min-w-0">
+                <p className="font-host text-[0.78rem] font-semibold leading-none text-black/48 sm:text-[0.86rem]">
+                  Shop by
+                </p>
+                <h2 className="category-section-title mt-1 min-w-0 text-balance font-host text-[clamp(2.05rem,8vw,3.65rem)] font-semibold leading-[0.9] text-black">
+                  {activeCategoryLabel}
+                </h2>
+              </div>
               <span className="shrink-0 pb-0.5 font-host text-[0.76rem] font-semibold tabular-nums text-black/42 sm:text-[0.82rem]">
                 {activeItems.length} {activeItems.length === 1 ? 'category' : 'categories'}
               </span>
