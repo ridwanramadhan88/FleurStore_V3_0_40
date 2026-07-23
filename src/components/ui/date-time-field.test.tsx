@@ -5,7 +5,7 @@ import { TimeSelectField } from './date-time-field'
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 describe('TimeSelectField', () => {
-  it('does not commit a highlighted time when the wheel only scrolls', async () => {
+  it('commits the nearest time when the wheel settles', async () => {
     const onChange = vi.fn()
     render(<TimeSelectField value="10:45" onChange={onChange} allowedSlots={['10:15', '10:30', '10:45', '11:00', '11:15']} />)
 
@@ -15,18 +15,17 @@ describe('TimeSelectField', () => {
     fireEvent.scroll(listbox)
     await wait(250)
 
-    expect(onChange).not.toHaveBeenCalled()
-    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }))
-    expect(onChange).not.toHaveBeenCalled()
+    expect(onChange).toHaveBeenCalledWith('11:00')
   })
 
-  it('commits only when the confirmation button is chosen', () => {
+  it('commits immediately when a time is tapped and has no confirmation button', () => {
     const onChange = vi.fn()
     render(<TimeSelectField value="10:45" onChange={onChange} allowedSlots={['10:30', '10:45', '11:00']} />)
 
     fireEvent.click(screen.getByRole('button', { name: /10:45/i }))
-    fireEvent.click(screen.getByRole('button', { name: 'Use 10:45' }))
-    expect(onChange).toHaveBeenCalledWith('10:45')
+    fireEvent.click(screen.getByRole('option', { name: '11:00' }))
+    expect(onChange).toHaveBeenCalledWith('11:00')
+    expect(screen.queryByRole('button', { name: /Use /i })).not.toBeInTheDocument()
   })
 })
 

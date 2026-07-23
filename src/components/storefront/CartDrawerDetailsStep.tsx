@@ -168,7 +168,7 @@ export const DetailsStep: FC<CartDrawerViewModel> = ({
           <select
             value={branch}
             onChange={(event) => setBranch(event.target.value)}
-            className={fieldClass}
+            className={`${fieldClass} sf-branch-select`}
           >
             <option value="" disabled>Select branch</option>
             {activeBranches.map((option) => (

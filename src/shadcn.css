@@ -5552,12 +5552,41 @@ html.dark .storefront-font .text-black {
   gap: 0.5rem;
   padding: 0 0 0.16rem;
   border: 0;
-  border-bottom: 3px solid #057640;
+  border-bottom: 2px solid #057640;
   border-radius: 0;
   background: transparent;
   color: #057640;
   box-shadow: none;
   transform: none;
+}
+
+.storefront-checkout-form .sf-branch-select {
+  min-height: 3.75rem;
+  border-color: rgba(0, 0, 0, 0.16);
+  font-weight: 500;
+}
+
+.storefront-date-popover [data-radix-popper-content-wrapper],
+.storefront-time-popover [data-radix-popper-content-wrapper] {
+  max-width: calc(100vw - 1rem);
+}
+
+@media (max-width: 639px) {
+  .storefront-checkout-form input.sf-field,
+  .storefront-checkout-form textarea.sf-field,
+  .storefront-checkout-form select.sf-field {
+    font-size: 16px;
+  }
+
+  .storefront-date-popover,
+  .storefront-time-popover {
+    max-width: calc(100vw - 1rem);
+  }
+
+  .storefront-date-popover .rdp {
+    width: 100%;
+    padding: 0.5rem;
+  }
 }
 
 .storefront-home__hero-shop-arrow {
@@ -5700,10 +5729,9 @@ html.dark .storefront-font .text-black {
   will-change: transform;
 }
 
-.storefront-home__flower:focus-visible,
-.storefront-home__desktop-flower:focus-visible {
-  outline: 3px solid #5e97f2;
-  outline-offset: 4px;
+.storefront-home__blue-flower:focus,
+.storefront-home__blue-flower:focus-visible {
+  outline: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

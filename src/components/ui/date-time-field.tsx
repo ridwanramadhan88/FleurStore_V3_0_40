@@ -81,7 +81,7 @@ export const DatePickerField: React.FC<DatePickerFieldProps> = ({
         </button>
       </PopoverTrigger>
       <PopoverContent
-        className="z-[140] w-auto p-0"
+        className="storefront-date-popover z-[140] w-[min(20rem,calc(100vw-2rem))] rounded-2xl p-1.5 shadow-xl"
         align="start"
         onCloseAutoFocus={(event) => {
           event.preventDefault()
@@ -267,6 +267,7 @@ const TimeScrollWheel: React.FC<{
         container.scrollTop = targetTop
       }
       if (nextValue !== highlighted) onHighlight(nextValue)
+      onCommit(nextValue)
     }, 120)
   }
 
@@ -363,7 +364,7 @@ export const TimeSelectField: React.FC<TimeSelectFieldProps> = ({
         </button>
       </PopoverTrigger>
       <PopoverContent
-        className="z-[140] w-[12.5rem] p-2.5"
+        className="storefront-time-popover z-[140] w-[min(15rem,calc(100vw-2rem))] rounded-2xl p-2 shadow-xl"
         align="end"
         onCloseAutoFocus={(event) => {
           event.preventDefault()
@@ -371,10 +372,6 @@ export const TimeSelectField: React.FC<TimeSelectFieldProps> = ({
         }}
       >
         <TimeScrollWheel highlighted={draftValue || selected} onHighlight={setDraftValue} onCommit={handleCommit} slots={slots} />
-        <div className="mt-2 grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 border-t border-border pt-2.5">
-          <button type="button" className="h-10 rounded-full px-3 text-sm text-muted-foreground hover:bg-accent" onClick={() => setOpen(false)}>Cancel</button>
-          <button type="button" className="h-10 min-w-0 rounded-full bg-primary px-3 text-sm font-semibold text-primary-foreground" onClick={() => handleCommit(draftValue || selected)}>Use {draftValue || selected}</button>
-        </div>
       </PopoverContent>
     </Popover>
   )

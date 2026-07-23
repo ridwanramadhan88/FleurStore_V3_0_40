@@ -16,6 +16,11 @@ import { StorefrontMiniCart } from "../components/storefront/StorefrontMiniCart"
 import { StorefrontHeader } from "../components/storefront/StorefrontHeader";
 import { StorefrontContainer } from "../components/storefront/StorefrontContainer";
 import { StorefrontFooter } from "../components/storefront/StorefrontFooter";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "../components/ui/dialog";
 import { getStorefrontDummyGallery } from "../components/storefront/storefrontDummyImages";
 import { getPromoPercentLabel } from "../domain/catalogDomain";
 import { useScrollThresholdCartBar } from "../hooks/useScrollThresholdCartBar";
@@ -101,6 +106,7 @@ export const StorefrontProductDetailPage: FC<Props> = ({
     activeVariants.length === 1 ? activeVariants[0]?.id ?? "" : "",
   );
   const [quantity, setQuantity] = useState(1);
+  const [sizingInfoOpen, setSizingInfoOpen] = useState(false);
   const [galleryDirection, setGalleryDirection] = useState<"previous" | "next">("next");
   const touchStartX = useRef<number | null>(null);
   const priceSectionRef = useRef<HTMLDivElement | null>(null);
@@ -124,8 +130,12 @@ export const StorefrontProductDetailPage: FC<Props> = ({
     revealThresholdVh: 0.5,
     revealKey: cartCount,
   });
-  const desktopCartBarPersistent = window.matchMedia("(min-width: 1024px)").matches;
-  const productDetailsAlwaysOpen = window.matchMedia("(min-width: 640px)").matches;
+  const desktopCartBarPersistent =
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(min-width: 1024px)").matches;
+  const productDetailsAlwaysOpen =
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(min-width: 640px)").matches;
 
   useEffect(() => {
     setActiveImage(images[0] ?? null);
@@ -328,9 +338,18 @@ export const StorefrontProductDetailPage: FC<Props> = ({
               <section className="space-y-4 lg:space-y-3" aria-labelledby="product-size-heading">
                 <div className="flex items-end justify-between gap-4">
                   <h2 id="product-size-heading" className="sf-type-2 font-medium">Size</h2>
-                  {requiresSizeSelection && !selectedVariant && (
-                    <p className="sf-type-1 font-medium text-[#d93d7c]">Select a size</p>
-                  )}
+                  <div className="flex items-center gap-3">
+                    {requiresSizeSelection && !selectedVariant && (
+                      <p className="sf-type-1 font-medium text-[#d93d7c]">Select a size</p>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setSizingInfoOpen(true)}
+                      className="border-b border-black/45 pb-0.5 sf-type-1 font-medium text-black/62 transition hover:border-black hover:text-black"
+                    >
+                      Sizing info
+                    </button>
+                  </div>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-3 sm:gap-x-5">
@@ -351,6 +370,7 @@ export const StorefrontProductDetailPage: FC<Props> = ({
                               : "cursor-not-allowed text-black/25 line-through"
                         }`}
                         aria-pressed={isSelected}
+                        aria-label={variant.size}
                       >
                         <span>{variant.size}</span>
                         {requiresSizeSelection && (
@@ -424,6 +444,17 @@ export const StorefrontProductDetailPage: FC<Props> = ({
             </section>
           </StorefrontContainer>
         </div>
+
+        <Dialog open={sizingInfoOpen} onOpenChange={setSizingInfoOpen}>
+          <DialogContent className="w-[min(92vw,30rem)] max-w-none gap-4 rounded-[1.5rem] bg-[var(--sf-cream)] p-5 sm:p-6">
+            <DialogTitle className="pr-12 text-xl font-medium">Sizing info</DialogTitle>
+            <div
+              className="aspect-square w-full overflow-hidden rounded-[1.125rem] border border-black/10 bg-white"
+              role="img"
+              aria-label="Sizing information image placeholder"
+            />
+          </DialogContent>
+        </Dialog>
 
         {relatedProducts.length > 0 && (
           <StorefrontContainer>
