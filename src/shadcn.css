@@ -5674,3 +5674,40 @@ html.dark .storefront-font .text-black {
     font-weight: 500;
   }
 }
+
+.storefront-home__flower,
+.storefront-home__desktop-flower {
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.storefront-home__artwork-base {
+  cursor: default;
+  pointer-events: none;
+}
+
+.storefront-home__blue-flower {
+  overflow: visible;
+}
+
+.storefront-home__blue-flower path {
+  fill: #5e97f2;
+  transform: rotate(var(--flower-rotation, 0deg));
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transition: transform 0.8s cubic-bezier(.4, 0, .2, 1);
+  will-change: transform;
+}
+
+.storefront-home__flower:focus-visible,
+.storefront-home__desktop-flower:focus-visible {
+  outline: 3px solid #5e97f2;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .storefront-home__blue-flower path {
+    transition: none;
+  }
+}
