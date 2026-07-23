@@ -1677,6 +1677,8 @@ input:-webkit-autofill:active {
 }
 
 .storefront-navigation-drawer__content {
+  display: flex;
+  flex-direction: column;
   height: 100%;
   overflow-y: auto;
   padding: 2rem 1.5rem calc(3rem + env(safe-area-inset-bottom));
@@ -1691,6 +1693,81 @@ input:-webkit-autofill:active {
 .storefront-navigation-list {
   display: grid;
   gap: 0.5rem;
+}
+
+.storefront-navigation-collections {
+  min-width: 0;
+  margin-top: auto;
+  margin-right: -1.5rem;
+  padding-top: clamp(2rem, 7vh, 4rem);
+}
+
+.storefront-navigation-collections__heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-right: 1.5rem;
+  padding-bottom: 0.7rem;
+}
+
+.storefront-navigation-collections__heading h3 {
+  font-family: "Host Grotesk", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 650;
+  line-height: 1;
+}
+
+.storefront-navigation-collections__heading span {
+  color: rgba(0, 0, 0, 0.42);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.storefront-navigation-collections__rail {
+  display: flex;
+  gap: 0.7rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  padding-right: 1.5rem;
+  padding-bottom: 0.2rem;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.storefront-navigation-collection-card {
+  position: relative;
+  flex: 0 0 clamp(12.2rem, 62vw, 14rem);
+  aspect-ratio: 955.84 / 357.97;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: 0.8rem;
+  background: transparent;
+  text-align: left;
+  scroll-snap-align: start;
+}
+
+.storefront-navigation-collection-card img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.storefront-navigation-collection-card > span {
+  position: absolute;
+  z-index: 1;
+  top: 20%;
+  left: 7.5%;
+  max-width: 54%;
+  font-family: "Host Grotesk", "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(1rem, 4.2vw, 1.2rem);
+  font-weight: 650;
+  line-height: 0.96;
 }
 
 .storefront-navigation-group {
@@ -1866,6 +1943,15 @@ input:-webkit-autofill:active {
 @media (min-width: 640px) {
   .storefront-navigation-drawer__content {
     padding: 2.6rem 2rem calc(3.25rem + env(safe-area-inset-bottom));
+  }
+
+  .storefront-navigation-collections {
+    margin-right: -2rem;
+  }
+
+  .storefront-navigation-collections__heading,
+  .storefront-navigation-collections__rail {
+    padding-right: 2rem;
   }
 
   .storefront-search-panel {
@@ -4375,7 +4461,7 @@ html.dark .storefront-font .text-black {
   .storefront-home__flower {
     z-index: 1;
     top: 3.05%;
-    right: -11.4%;
+    right: -8.2%;
     left: auto;
     width: auto;
     height: 100.7%;

@@ -461,7 +461,7 @@ export const StorefrontPage: FC = () => {
   return (
     <div
       className={`storefront-font min-h-screen ${
-        route === "categories" ? "storefront-font--footer-bleed" : ""
+        route === "categories" || route === "product" ? "storefront-font--footer-bleed" : ""
       }`}
       data-no-translate
     >
@@ -500,6 +500,7 @@ export const StorefrontPage: FC = () => {
             cartTotalIdr={cartTotalIdr}
             cartOpen={isCartOpen}
             formatter={currencyFormatter}
+            storeProfile={storeProfile}
             onBack={navigateBackToShop}
             onOpenHome={navigateHome}
             onOpenCart={handleOpenCart}
@@ -622,6 +623,7 @@ export const StorefrontPage: FC = () => {
         onClose={() => setIsMenuOpen(false)}
         onOpenCategories={navigateCategories}
         onOpenAllFlowers={() => navigateShop("all")}
+        onOpenCollection={navigateShopByCollection}
       />
 
       {route === "shop" &&
@@ -634,6 +636,7 @@ export const StorefrontPage: FC = () => {
             formatter={currencyFormatter}
             onOpen={handleOpenCart}
             concealed={!shopCartBarVisible}
+            suppressUnderlay={isMenuOpen}
           />
         )}
 

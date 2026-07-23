@@ -1,11 +1,39 @@
 import type { FC } from 'react'
 import { ChevronRight } from 'lucide-react'
+import classicRoseCollectionCard from '../../assets/storefront-collections/classic-rose.svg'
+import medLilyCollectionCard from '../../assets/storefront-collections/med-lily-series.svg'
+import thumbelinaCollectionCard from '../../assets/storefront-collections/thumbelina.svg'
+import omakaseCollectionCard from '../../assets/storefront-collections/omakase.svg'
+
+const collectionCards = [
+  {
+    name: 'Classic Rose',
+    image: classicRoseCollectionCard,
+    textColor: '#fbf9ef',
+  },
+  {
+    name: 'Med Lily Series',
+    image: medLilyCollectionCard,
+    textColor: '#174c38',
+  },
+  {
+    name: 'Thumbelina',
+    image: thumbelinaCollectionCard,
+    textColor: '#174c38',
+  },
+  {
+    name: 'Omakase',
+    image: omakaseCollectionCard,
+    textColor: '#fbf9ef',
+  },
+] as const
 
 interface Props {
   open: boolean
   onClose: () => void
   onOpenCategories: () => void
   onOpenAllFlowers: () => void
+  onOpenCollection: (collection: string) => void
 }
 
 export const StorefrontNavigationDrawer: FC<Props> = ({
@@ -13,6 +41,7 @@ export const StorefrontNavigationDrawer: FC<Props> = ({
   onClose,
   onOpenCategories,
   onOpenAllFlowers,
+  onOpenCollection,
 }) => (
   <div
     className={`storefront-navigation-layer ${open ? 'storefront-navigation-layer--open' : ''}`}
@@ -57,6 +86,33 @@ export const StorefrontNavigationDrawer: FC<Props> = ({
             All Flowers
           </button>
         </nav>
+
+        <section
+          className="storefront-navigation-collections"
+          aria-labelledby="storefront-navigation-collections-title"
+        >
+          <div className="storefront-navigation-collections__heading">
+            <h3 id="storefront-navigation-collections-title">Collection Series</h3>
+            <span aria-hidden="true">Swipe</span>
+          </div>
+
+          <div className="storefront-navigation-collections__rail no-scrollbar">
+            {collectionCards.map((collection) => (
+              <button
+                key={collection.name}
+                type="button"
+                className="storefront-navigation-collection-card tap-scale"
+                onClick={() => onOpenCollection(collection.name)}
+                aria-label={`Shop ${collection.name} collection`}
+              >
+                <img src={collection.image} alt="" aria-hidden="true" />
+                <span style={{ color: collection.textColor }}>
+                  {collection.name}
+                </span>
+              </button>
+            ))}
+          </div>
+        </section>
       </div>
     </aside>
   </div>

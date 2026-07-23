@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import type { CatalogProduct } from '../store/catalogStoreTypes'
+import { DEFAULT_OWNER_SETTINGS } from '../domain/settings/defaultOwnerSettings'
 import { StorefrontProductDetailPage } from './StorefrontProductDetailPage'
 
 const product: CatalogProduct = {
@@ -31,6 +32,7 @@ const renderPage = (onAddToCart = vi.fn(), onOpenCart = vi.fn()) => {
       cartTotalIdr={0}
       cartOpen={false}
       formatter={formatter}
+      storeProfile={DEFAULT_OWNER_SETTINGS.storeProfile}
       onBack={vi.fn()}
       onOpenHome={vi.fn()}
       onOpenCart={onOpenCart}

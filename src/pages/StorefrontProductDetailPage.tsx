@@ -9,11 +9,13 @@ import type { FC } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import type { CatalogProduct, CatalogVariant } from "../store/catalogStoreTypes";
+import type { StoreProfileSettings } from "../types/settings";
 import { CartBagIcon, CartCountBadge } from "../components/storefront/StorefrontCartIcon";
 import { StorefrontProductCard } from "../components/storefront/StorefrontProductCard";
 import { StorefrontMiniCart } from "../components/storefront/StorefrontMiniCart";
 import { StorefrontHeader } from "../components/storefront/StorefrontHeader";
 import { StorefrontContainer } from "../components/storefront/StorefrontContainer";
+import { StorefrontFooter } from "../components/storefront/StorefrontFooter";
 import { getStorefrontDummyGallery } from "../components/storefront/storefrontDummyImages";
 import { getPromoPercentLabel } from "../domain/catalogDomain";
 import { useScrollThresholdCartBar } from "../hooks/useScrollThresholdCartBar";
@@ -25,6 +27,7 @@ interface Props {
   cartTotalIdr: number;
   cartOpen: boolean;
   formatter: Intl.NumberFormat;
+  storeProfile: StoreProfileSettings;
   onBack: () => void;
   onOpenHome: () => void;
   onOpenCart: () => void;
@@ -81,6 +84,7 @@ export const StorefrontProductDetailPage: FC<Props> = ({
   cartTotalIdr,
   cartOpen,
   formatter,
+  storeProfile,
   onBack,
   onOpenHome,
   onOpenCart,
@@ -172,7 +176,7 @@ export const StorefrontProductDetailPage: FC<Props> = ({
           backLabel="Back"
         />
       </div>
-      <main className="pb-40 lg:pb-24">
+      <main>
         <div className="lg:mx-auto lg:grid lg:max-w-[1320px] lg:grid-cols-[minmax(0,620px)_minmax(380px,1fr)] lg:items-start lg:gap-16 lg:px-12 lg:pt-10 xl:gap-20 xl:px-14">
           <section
             aria-label={`${product.name} images`}
@@ -436,6 +440,9 @@ export const StorefrontProductDetailPage: FC<Props> = ({
             </section>
           </StorefrontContainer>
         )}
+        <div className="mt-12 sm:mt-16 lg:mt-24">
+          <StorefrontFooter storeProfile={storeProfile} />
+        </div>
       </main>
 
       {cartCount > 0 && !cartOpen && (
@@ -445,6 +452,7 @@ export const StorefrontProductDetailPage: FC<Props> = ({
           formatter={formatter}
           onOpen={onOpenCart}
           concealed={!mobileCartBarVisible}
+          suppressUnderlay={menuOpen}
         />
       )}
     </div>

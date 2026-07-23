@@ -7,6 +7,7 @@ interface Props {
   formatter: Intl.NumberFormat
   onOpen: () => void
   concealed?: boolean
+  suppressUnderlay?: boolean
 }
 
 export const StorefrontMiniCart: FC<Props> = ({
@@ -15,6 +16,7 @@ export const StorefrontMiniCart: FC<Props> = ({
   formatter,
   onOpen,
   concealed = false,
+  suppressUnderlay = false,
 }) => {
   const isVisible = !concealed
   const [panelVisible, setPanelVisible] = useState(false)
@@ -37,6 +39,16 @@ export const StorefrontMiniCart: FC<Props> = ({
     }
 
     if (isVisible) {
+      if (suppressUnderlay) {
+        // The side navigation owns the full viewport while open. Remove the
+        // browser underlay immediately, but keep the cart panel state intact
+        // behind the navigation layer.
+        root.classList.remove(className)
+        body.classList.remove(className)
+        setPanelVisible(true)
+        return
+      }
+
       // Paint the browser underlay first. The cart panel starts its entrance on
       // the following frame, so Safari never waits for the movement to finish.
       root.classList.add(className)
@@ -58,7 +70,7 @@ export const StorefrontMiniCart: FC<Props> = ({
       body.classList.remove(className)
       underlayReleaseTimerRef.current = null
     }, 540)
-  }, [isVisible])
+  }, [isVisible, suppressUnderlay])
 
   useEffect(() => () => {
     if (panelRevealFrameRef.current !== null) {
