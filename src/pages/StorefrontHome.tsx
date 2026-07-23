@@ -44,17 +44,17 @@ export const StorefrontHome: FC<Props> = ({
         <span className="storefront-home__headline-line">You’ll get</span>
         <span className="storefront-home__headline-line storefront-home__headline-line--accent">Flowers</span>
         <span className="storefront-home__headline-line">Today!</span>
-
-        <button
-          type="button"
-          className="storefront-home__hero-shop tap-scale"
-          onClick={onOpenCategories}
-          aria-label="Open flower categories"
-        >
-          <span>Shop</span>
-          <span className="storefront-home__hero-shop-arrow" aria-hidden="true">→</span>
-        </button>
       </div>
+
+      <button
+        type="button"
+        className="storefront-home__hero-shop tap-scale"
+        onClick={onOpenCategories}
+        aria-label="Open flower categories"
+      >
+        <span>Shop</span>
+        <span className="storefront-home__hero-shop-arrow" aria-hidden="true">→</span>
+      </button>
     </div>
   </main>
 )

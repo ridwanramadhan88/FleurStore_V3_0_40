@@ -4346,3 +4346,128 @@ html.dark .storefront-font .text-black {
   }
 }
 
+
+/* V3.0.44 — mobile homepage alignment to the approved poster reference.
+   The grouped SVG is enlarged as one locked composition, the vase is cropped
+   by a flat green foreground edge, and the Shop action returns to a plain
+   artwork-integrated text link. */
+@media (max-width: 639px) {
+  body:has(.storefront-home),
+  body:has(.storefront-home) #app,
+  body:has(.storefront-home) .storefront-font,
+  .storefront-home,
+  .storefront-home__poster {
+    background-color: #fff8f0;
+  }
+
+  .storefront-home__poster {
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .storefront-home__flower {
+    z-index: 1;
+    top: 3.05%;
+    right: -6.4%;
+    left: auto;
+    width: auto;
+    height: 106%;
+    max-width: none;
+    object-fit: contain;
+    object-position: top right;
+    transform: none;
+    transform-origin: top right;
+  }
+
+  .storefront-home__poster::after {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 6.6%;
+    background: #057640;
+    clip-path: polygon(
+      0 12%,
+      30% 42%,
+      65% 4%,
+      100% 18%,
+      100% 100%,
+      0 100%
+    );
+    content: "";
+    pointer-events: none;
+  }
+
+  .storefront-home__headline {
+    z-index: 3;
+    top: 26.1%;
+    left: 8.5%;
+    width: min(66%, 17rem);
+    gap: 0;
+    font-size: clamp(2.32rem, 6.39vw, 2.71rem);
+    line-height: 0.94;
+  }
+
+  .storefront-home__headline-line {
+    line-height: 0.94;
+  }
+
+  .storefront-home__headline-line--accent {
+    margin-block: 0.11em 0.08em;
+    font-size: 1.466em;
+    font-weight: 700;
+    line-height: 0.84;
+  }
+
+  .storefront-home__hero-shop {
+    position: absolute;
+    z-index: 3;
+    top: 68%;
+    left: 71.4%;
+    display: inline-flex;
+    min-height: 0;
+    align-items: center;
+    gap: 0.42rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #101010;
+    font-family: "Host Grotesk", "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(1.05rem, 4.25vw, 1.2rem);
+    font-weight: 500;
+    line-height: 1;
+    box-shadow: none;
+    transform: none;
+    white-space: nowrap;
+  }
+
+  .storefront-home__hero-shop-arrow {
+    display: inline;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 1.34em;
+    font-weight: 400;
+    line-height: 0.8;
+  }
+
+  .storefront-home__hero-shop:active {
+    transform: translateX(2px);
+  }
+}
+
+/* Keep the CTA anchored to the poster after moving it out of the headline
+   wrapper; the mobile reference-specific position above remains authoritative. */
+@media (min-width: 640px) {
+  .storefront-home__hero-shop {
+    position: absolute;
+    z-index: 3;
+    top: 62%;
+    left: 7%;
+  }
+}

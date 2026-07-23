@@ -167,7 +167,7 @@ const ArtworkCategoryCard: FC<{ item: ArtworkCardItem }> = ({ item }) => {
       <span
         className={`category-art-card__title block whitespace-nowrap font-host font-semibold [font-kerning:normal] ${
           hasFixedTitleLines
-            ? 'text-[clamp(1.575rem,6.48vw,3.158rem)] leading-[0.92] sm:text-[clamp(1.662rem,3.32vw,3.071rem)]'
+            ? 'text-[clamp(1.76rem,7.2vw,3.48rem)] leading-[0.88] sm:text-[clamp(1.86rem,3.7vw,3.4rem)]'
             : compactTitle
               ? 'text-[clamp(1.575rem,6.48vw,3.158rem)] leading-[0.98] sm:text-[clamp(1.662rem,3.32vw,3.071rem)]'
               : 'text-[clamp(1.766rem,7.266vw,3.54rem)] leading-[0.98] sm:text-[clamp(1.863rem,3.726vw,3.443rem)]'
