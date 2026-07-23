@@ -53,7 +53,17 @@ export const StorefrontHome: FC<Props> = ({
         aria-label="Open flower categories"
       >
         <span>Shop</span>
-        <span className="storefront-home__hero-shop-arrow" aria-hidden="true">→</span>
+        <svg
+          className="storefront-home__hero-shop-arrow"
+          viewBox="0 0 32 32"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M5 14.5h15.1l-4.7-5.15 2.15-1.95L25.4 16l-7.85 8.6-2.15-1.95 4.7-5.15H5v-3Z"
+            fill="currentColor"
+          />
+        </svg>
       </button>
     </div>
   </main>

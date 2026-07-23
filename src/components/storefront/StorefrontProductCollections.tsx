@@ -18,7 +18,6 @@ interface Props {
 
 const sectionTitleClass = 'sf-section-title text-black'
 const INTRO_FIRST_SLIDE_DELAY = 750
-const INTRO_SECOND_SLIDE_DELAY = 2250
 const INTRO_SLIDE_CARD_COUNT = 1
 const LOOP_SCROLL_IDLE_DELAY = 140
 
@@ -163,10 +162,6 @@ export const StorefrontProductRail: FC<Props & { title: string }> = ({
       window.setTimeout(
         () => slideByCards(INTRO_SLIDE_CARD_COUNT),
         INTRO_FIRST_SLIDE_DELAY,
-      ),
-      window.setTimeout(
-        () => slideByCards(INTRO_SLIDE_CARD_COUNT),
-        INTRO_SECOND_SLIDE_DELAY,
       ),
     ]
 

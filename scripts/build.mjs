@@ -61,21 +61,33 @@ if (isProd) {
     '.woff2': 'font/woff2',
   }
 
+  const distRoot = join(process.cwd(), 'dist')
+  const indexFile = join(distRoot, 'index.html')
+
   const server = createServer(async (req, res) => {
-    const url = new URL(req.url || '/', 'http://localhost')
-    let file = join(process.cwd(), 'dist', url.pathname.replace(/^\//, ''))
-
     try {
-      await stat(file)
-    } catch {
-      file = join(process.cwd(), 'dist', 'index.html')
-    }
+      const url = new URL(req.url || '/', 'http://localhost')
+      const pathname = decodeURIComponent(url.pathname)
+      const relativePath = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '')
+      let file = join(distRoot, relativePath)
 
-    const data = await readFile(file)
-    res.writeHead(200, {
-      'Content-Type': mime[extname(file)] || 'application/octet-stream',
-    })
-    res.end(data)
+      try {
+        const fileStat = await stat(file)
+        if (!fileStat.isFile()) file = indexFile
+      } catch {
+        file = indexFile
+      }
+
+      const data = await readFile(file)
+      res.writeHead(200, {
+        'Content-Type': mime[extname(file)] || 'application/octet-stream',
+      })
+      res.end(req.method === 'HEAD' ? undefined : data)
+    } catch (error) {
+      console.error('Local frontend request failed:', error)
+      res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' })
+      res.end('Local frontend server error')
+    }
   })
 
   server.listen(0, () => {

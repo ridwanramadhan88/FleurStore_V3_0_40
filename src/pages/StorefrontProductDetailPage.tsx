@@ -118,6 +118,7 @@ export const StorefrontProductDetailPage: FC<Props> = ({
     enabled: cartCount > 0,
     resetKey: product.id,
     revealThresholdVh: 0.5,
+    revealKey: cartCount,
   });
 
   useEffect(() => {

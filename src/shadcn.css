@@ -2372,9 +2372,9 @@ input:-webkit-autofill:active {
 
 
 
-/* Trigger the natural iOS Safari bottom underlay from the first frame of
-   the cart-bar transition. This is only a 1px paint sentinel plus the existing
-   page background; it does not add a visible panel beneath the cart. */
+/* Trigger the natural iOS Safari bottom underlay before the cart-bar starts
+   moving. The fixed reserve-height paint layer reaches beneath the browser
+   toolbar immediately, while the actual cart panel enters on the next frame. */
 @media (max-width: 639px) {
   html.storefront-mini-cart-underlay-active,
   body.storefront-mini-cart-underlay-active,
@@ -2389,7 +2389,7 @@ input:-webkit-autofill:active {
     right: 0;
     bottom: 0;
     left: 0;
-    height: 1px;
+    height: var(--sf-browser-bottom-reserve);
     pointer-events: none;
     background: var(--sf-cream);
   }
@@ -2407,8 +2407,8 @@ input:-webkit-autofill:active {
   visibility: hidden;
   transform: translate3d(0, 105%, 0);
   transition:
-    transform 1080ms cubic-bezier(0.22, 1, 0.36, 1),
-    visibility 0s linear 1080ms;
+    transform 540ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 540ms;
   will-change: transform;
 }
 
@@ -3843,7 +3843,7 @@ html.dark .storefront-font .text-black {
 
   .storefront-topbar .storefront-brand--header .storefront-brand__type {
     display: block;
-    width: 7.37rem;
+    width: 8.48rem;
   }
 
   .storefront-home__headline {
@@ -3852,7 +3852,7 @@ html.dark .storefront-font .text-black {
   }
 
   .storefront-home__headline-line {
-    line-height: 0.94;
+    line-height: 0.98;
   }
 
   .storefront-home__headline-line--accent {
@@ -3866,7 +3866,7 @@ html.dark .storefront-font .text-black {
   }
 
   .storefront-topbar .storefront-brand--header .storefront-brand__type {
-    width: 6.71rem;
+    width: 7.72rem;
   }
 }
 
@@ -4347,7 +4347,7 @@ html.dark .storefront-font .text-black {
 }
 
 
-/* V3.0.45 — mobile homepage alignment to the approved poster reference.
+/* V3.0.46 — mobile homepage alignment to the approved poster reference.
    The grouped SVG is enlarged as one locked composition, the vase is cropped
    by a flat green foreground edge, and the Shop action returns to a plain
    artwork-integrated text link. */
@@ -4375,10 +4375,10 @@ html.dark .storefront-font .text-black {
   .storefront-home__flower {
     z-index: 1;
     top: 3.05%;
-    right: -6.4%;
+    right: -11.4%;
     left: auto;
     width: auto;
-    height: 106%;
+    height: 100.7%;
     max-width: none;
     object-fit: contain;
     object-position: top right;
@@ -4411,20 +4411,20 @@ html.dark .storefront-font .text-black {
     top: 26.1%;
     left: 8.5%;
     width: min(66%, 17rem);
-    gap: 0;
+    gap: clamp(0.2rem, 0.9vw, 0.34rem);
     font-size: clamp(2.32rem, 6.39vw, 2.71rem);
-    line-height: 0.94;
+    line-height: 0.98;
   }
 
   .storefront-home__headline-line {
-    line-height: 0.94;
+    line-height: 0.98;
   }
 
   .storefront-home__headline-line--accent {
-    margin-block: 0.11em 0.08em;
+    margin-block: 0;
     font-size: 1.466em;
     font-weight: 700;
-    line-height: 0.84;
+    line-height: 0.88;
   }
 
   .storefront-home__hero-shop {
@@ -4454,15 +4454,13 @@ html.dark .storefront-font .text-black {
   }
 
   .storefront-home__hero-shop-arrow {
-    display: inline;
-    width: auto;
-    height: auto;
+    display: block;
+    width: 1.24em;
+    height: 1.24em;
+    flex: 0 0 auto;
     border-radius: 0;
     background: transparent;
     color: inherit;
-    font-size: 1.34em;
-    font-weight: 400;
-    line-height: 0.8;
   }
 
   .storefront-home__hero-shop:active {

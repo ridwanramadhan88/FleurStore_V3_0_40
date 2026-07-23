@@ -5,6 +5,7 @@ interface ScrollThresholdCartBarOptions {
   resetKey: string | number;
   revealThresholdVh?: number;
   blocked?: boolean;
+  revealKey?: string | number;
 }
 
 /**
@@ -18,9 +19,11 @@ export const useScrollThresholdCartBar = ({
   resetKey,
   revealThresholdVh = 0.5,
   blocked = false,
+  revealKey,
 }: ScrollThresholdCartBarOptions): boolean => {
   const [visible, setVisible] = useState(false);
   const visibleRef = useRef(false);
+  const revealKeyRef = useRef(revealKey);
 
   useEffect(() => {
     visibleRef.current = false;
@@ -71,6 +74,16 @@ export const useScrollThresholdCartBar = ({
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, [blocked, enabled, resetKey, revealThresholdVh]);
+
+  useEffect(() => {
+    const revealChanged = revealKey !== revealKeyRef.current;
+    revealKeyRef.current = revealKey;
+
+    if (!enabled || blocked || !revealChanged) return;
+
+    visibleRef.current = true;
+    setVisible(true);
+  }, [blocked, enabled, revealKey]);
 
   return visible;
 };

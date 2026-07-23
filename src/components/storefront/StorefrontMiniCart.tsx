@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, type FC } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type FC } from 'react'
 import { CartBagIcon } from './StorefrontCartIcon'
 
 interface Props {
@@ -17,6 +17,8 @@ export const StorefrontMiniCart: FC<Props> = ({
   concealed = false,
 }) => {
   const isVisible = !concealed
+  const [panelVisible, setPanelVisible] = useState(false)
+  const panelRevealFrameRef = useRef<number | null>(null)
   const underlayReleaseTimerRef = useRef<number | null>(null)
 
   useLayoutEffect(() => {
@@ -24,30 +26,44 @@ export const StorefrontMiniCart: FC<Props> = ({
     const body = document.body
     const className = 'storefront-mini-cart-underlay-active'
 
+    if (panelRevealFrameRef.current !== null) {
+      window.cancelAnimationFrame(panelRevealFrameRef.current)
+      panelRevealFrameRef.current = null
+    }
+
     if (underlayReleaseTimerRef.current !== null) {
       window.clearTimeout(underlayReleaseTimerRef.current)
       underlayReleaseTimerRef.current = null
     }
 
     if (isVisible) {
-      // Trigger Safari's lower-page underlay on the very first frame of the
-      // cart entrance, before the panel has completed its slide transition.
+      // Paint the browser underlay first. The cart panel starts its entrance on
+      // the following frame, so Safari never waits for the movement to finish.
       root.classList.add(className)
       body.classList.add(className)
+      panelRevealFrameRef.current = window.requestAnimationFrame(() => {
+        setPanelVisible(true)
+        panelRevealFrameRef.current = null
+      })
       return
     }
 
+    setPanelVisible(false)
     if (!root.classList.contains(className)) return
 
-    // Keep the underlay active while the panel slides out, then release it.
+    // Release the browser underlay twice as quickly on exit so it does not
+    // linger after the cart bar starts leaving the viewport.
     underlayReleaseTimerRef.current = window.setTimeout(() => {
       root.classList.remove(className)
       body.classList.remove(className)
       underlayReleaseTimerRef.current = null
-    }, 1080)
+    }, 540)
   }, [isVisible])
 
   useEffect(() => () => {
+    if (panelRevealFrameRef.current !== null) {
+      window.cancelAnimationFrame(panelRevealFrameRef.current)
+    }
     if (underlayReleaseTimerRef.current !== null) {
       window.clearTimeout(underlayReleaseTimerRef.current)
     }
@@ -57,8 +73,8 @@ export const StorefrontMiniCart: FC<Props> = ({
 
   return (
     <div
-      className={`storefront-mini-cart${isVisible ? ' storefront-mini-cart--visible' : ''}`}
-      aria-hidden={!isVisible}
+      className={`storefront-mini-cart${panelVisible ? ' storefront-mini-cart--visible' : ''}`}
+      aria-hidden={!panelVisible}
     >
       <div className="storefront-mini-cart__panel">
         <div className="storefront-mini-cart__content">
@@ -76,7 +92,7 @@ export const StorefrontMiniCart: FC<Props> = ({
             onClick={onOpen}
             className="storefront-mini-cart__button"
             aria-label={`View cart, ${count} ${count === 1 ? 'item' : 'items'}`}
-            tabIndex={isVisible ? 0 : -1}
+            tabIndex={panelVisible ? 0 : -1}
           >
             <CartBagIcon tone="light" className="h-auto w-5" />
             <span>View cart</span>

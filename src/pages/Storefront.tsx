@@ -189,6 +189,7 @@ export const StorefrontPage: FC = () => {
     resetKey: route,
     revealThresholdVh: 0.25,
     blocked: shopFooterInViewport,
+    revealKey: cartCount,
   });
 
   const navigateHome = useCallback(() => {
